@@ -39,7 +39,7 @@ function Monitor_output_Update(message) {
     }
     var regex = /ok T:/g;
 
-    if (target_firmware == "repetier" || target_firmware == "repetier4davinci") {
+    if (target_firmware ==  firmwares.Repetier || target_firmware ==  firmwares.Repetier4DaVinci) {
         regex = /T:/g;
     }
     var output = "";
@@ -49,7 +49,7 @@ function Monitor_output_Update(message) {
         //Filter the output  
         if ((Monitor_output[i].trim().toLowerCase().startsWith("ok")) && !isverbosefilter) continue;
         if ((Monitor_output[i].trim().toLowerCase() == "wait") && !isverbosefilter) continue;
-        if ((target_firmware == "grbl") || (target_firmware == "grbl-embedded")) {
+        if ((target_firmware ==  firmwares.Grbl) || (target_firmware ==  firmwares.GrblEmbedded)) {
             //no status
             if ((Monitor_output[i].startsWith("<") || Monitor_output[i].startsWith("[echo:")) && !isverbosefilter) continue;
         } else {

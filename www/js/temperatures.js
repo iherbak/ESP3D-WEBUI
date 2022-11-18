@@ -177,7 +177,7 @@ function get_Temperatures() {
   process_Temperatures(response);
   return;
   //endRemoveIf(production)
-  if (target_firmware == "marlin-embedded")
+  if (target_firmware ==  firmwares.MarlinEmbedded)
     SendPrinterCommand(command, false, null, null, 105, 1);
   else SendPrinterCommand(command, false, process_Temperatures, null, 105, 1);
 }
@@ -389,25 +389,25 @@ function temperature_heatSet(target) {
 
 function supportsRedundantTemperatures() {
   return (
-    target_firmware == "marlin-embedded" ||
-    target_firmware == "marlin" ||
-    target_firmware == "smoothieware"
+    target_firmware ==  firmwares.MarlinEmbedded ||
+    target_firmware ==  firmwares.Marlin ||
+    target_firmware ==  firmwares.Smoothieware
   );
 }
 
 function supportsProbeTemperatures() {
   return (
-    target_firmware == "marlin-embedded" ||
-    target_firmware == "marlin" ||
-    target_firmware == "smoothieware"
+    target_firmware ==  firmwares.MarlinEmbedded ||
+    target_firmware ==  firmwares.Marlin ||
+    target_firmware ==  firmwares.Smoothieware
   );
 }
 
 function supportsChamberTemperatures() {
   return (
-    target_firmware == "marlin-embedded" ||
-    target_firmware == "marlin" ||
-    target_firmware == "marlinkimbra" ||
-    target_firmware == "smoothieware"
+    target_firmware ==  firmwares.MarlinEmbedded ||
+    target_firmware ==  firmwares.Marlin ||
+    target_firmware ==  firmwares.MarlinKimbra ||
+    target_firmware ==  firmwares.Smoothieware
   );
 }

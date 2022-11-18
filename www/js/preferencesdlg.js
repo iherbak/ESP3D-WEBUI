@@ -54,7 +54,7 @@ var defaultpreferenceslist = "[{\
 var preferences_file_name = '/preferences.json';
 
 function initpreferences() {
-    if ((target_firmware == "grbl-embedded") || (target_firmware == "grbl")) {
+    if ((target_firmware ==  firmwares.GrblEmbedded) || (target_firmware ==  firmwares.Grbl)) {
         defaultpreferenceslist = "[{\
                                             \"language\":\"en\",\
                                             \"enable_lock_UI\":\"false\",\
@@ -162,7 +162,7 @@ function initpreferences() {
                                             \"surfacespindle\":\"10000\"\
                                             }]";
 
-        if (target_firmware == "marlin-embedded") document.getElementById('DHT_pref_panel').style.display = 'none';
+        if (target_firmware ==  firmwares.MarlinEmbedded) document.getElementById('DHT_pref_panel').style.display = 'none';
         else document.getElementById('DHT_pref_panel').style.display = 'block';
 
         document.getElementById('temp_pref_panel').style.display = 'block';
@@ -408,7 +408,7 @@ function applypreferenceslist() {
     else document.getElementById('fan_UI').style.display = 'none';
 
 
-    if ((target_firmware == "grbl-embedded") || (target_firmware == "grbl")) {
+    if ((target_firmware ==  firmwares.GrblEmbedded) || (target_firmware ==  firmwares.Grbl)) {
         if (preferenceslist[0].enable_grbl_panel === 'true') document.getElementById('grblPanel').style.display = 'flex';
         else {
             document.getElementById('grblPanel').style.display = 'none';
@@ -463,7 +463,7 @@ function applypreferenceslist() {
         document.getElementById('files_refresh_btn').style.display = 'flex';
     }
     
-    if(target_firmware == "grbl") {
+    if(target_firmware ==  firmwares.Grbl) {
             document.getElementById('files_refresh_printer_sd_btn').style.display = 'none';
             document.getElementById('files_refresh_btn').style.display = 'none';
             document.getElementById('print_upload_btn').style.display = 'none';
@@ -482,7 +482,7 @@ function applypreferenceslist() {
     document.getElementById('statusInterval_check').value = parseInt(preferenceslist[0].interval_status);
     document.getElementById('control_xy_velocity').value = parseInt(preferenceslist[0].xy_feedrate);
     document.getElementById('control_z_velocity').value = parseInt(preferenceslist[0].z_feedrate);
-    if (target_firmware == "grbl-embedded"){
+    if (target_firmware ==  firmwares.GrblEmbedded){
         if (grblaxis > 2 )axis_Z_feedrate = parseInt(preferenceslist[0].z_feedrate);
         if (grblaxis > 3 )axis_A_feedrate = parseInt(preferenceslist[0].a_feedrate);
         if (grblaxis > 4 )axis_B_feedrate = parseInt(preferenceslist[0].b_feedrate);
@@ -648,13 +648,13 @@ function build_dlg_preferences_list() {
     if (typeof(preferenceslist[0].xy_feedrate) !== 'undefined') {
         document.getElementById('preferences_control_xy_velocity').value = parseInt(preferenceslist[0].xy_feedrate);
     } else document.getElementById('preferences_control_xy_velocity').value = parseInt(default_preferenceslist[0].xy_feedrate);
-    if ((target_firmware != "grbl-embedded") || (grblaxis > 2)) {
+    if ((target_firmware !=  firmwares.GrblEmbedded) || (grblaxis > 2)) {
         //z feedrate
         if (typeof(preferenceslist[0].z_feedrate) !== 'undefined') {
             document.getElementById('preferences_control_z_velocity').value = parseInt(preferenceslist[0].z_feedrate);
         } else document.getElementById('preferences_control_z_velocity').value = parseInt(default_preferenceslist[0].z_feedrate);
     }
-    if (target_firmware == "grbl-embedded") {
+    if (target_firmware ==  firmwares.GrblEmbedded) {
         if (grblaxis > 3) {
             //a feedrate
             if (typeof(preferenceslist[0].a_feedrate) !== 'undefined') {
@@ -868,11 +868,11 @@ function closePreferencesDialog() {
             if (document.getElementById('preferences_status_Interval_check').value != parseInt(preferenceslist[0].interval_status)) modified = true;
             //xy feedrate
             if (document.getElementById('preferences_control_xy_velocity').value != parseInt(preferenceslist[0].xy_feedrate)) modified = true;
-            if ((target_firmware != "grbl-embedded") || (grblaxis > 2)) {
+            if ((target_firmware !=  firmwares.GrblEmbedded) || (grblaxis > 2)) {
                 //z feedrate
                 if (document.getElementById('preferences_control_z_velocity').value != parseInt(preferenceslist[0].z_feedrate)) modified = true;
             }
-            if (target_firmware == "grbl-embedded") {
+            if (target_firmware ==  firmwares.GrblEmbedded) {
                 if (grblaxis > 3) {
                     //a feedrate
                     if (document.getElementById('preferences_control_a_velocity').value != parseInt(preferenceslist[0].a_feedrate)) modified = true;
@@ -964,10 +964,10 @@ function SavePreferences(current_preferences) {
             !Checkvalues("preferences_surfacestepover") ||
             !Checkvalues("preferences_surfacezdepth")
         ) return;
-        if ((target_firmware != "grbl-embedded") || (grblaxis > 2)) {
+        if ((target_firmware !=  firmwares.GrblEmbedded) || (grblaxis > 2)) {
             if(!Checkvalues("preferences_control_z_velocity")) return;
         }
-        if (target_firmware == "grbl-embedded") {
+        if (target_firmware ==  firmwares.GrblEmbedded) {
             if( (grblaxis > 3) && (!Checkvalues("preferences_control_a_velocity"))) return;
             if( (grblaxis > 4) && (!Checkvalues("preferences_control_b_velocity"))) return;
             if( (grblaxis > 5) && (!Checkvalues("preferences_control_c_velocity"))) return;
@@ -1009,10 +1009,10 @@ function SavePreferences(current_preferences) {
         saveprefs += "\",\"interval_positions\":\"" + document.getElementById('preferences_pos_Interval_check').value;
         saveprefs += "\",\"interval_status\":\"" + document.getElementById('preferences_status_Interval_check').value;
         saveprefs += "\",\"xy_feedrate\":\"" + document.getElementById('preferences_control_xy_velocity').value;
-        if ((target_firmware != "grbl-embedded") || (grblaxis > 2)) {
+        if ((target_firmware !=  firmwares.GrblEmbedded) || (grblaxis > 2)) {
             saveprefs += "\",\"z_feedrate\":\"" + document.getElementById('preferences_control_z_velocity').value;
         }
-        if (target_firmware == "grbl-embedded") {
+        if (target_firmware ==  firmwares.GrblEmbedded) {
             if (grblaxis > 3){
                 saveprefs += "\",\"a_feedrate\":\"" + document.getElementById('preferences_control_a_velocity').value;
             }

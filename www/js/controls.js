@@ -20,7 +20,7 @@ function showAxiscontrols() {
     document.getElementById('JogBar').style.display = 'block';
     document.getElementById('HomeZ').style.display = 'block';
     document.getElementById('control_z_position_display').style.display = 'block';
-    if ((target_firmware == "grbl-embedded") || (target_firmware == "grbl")) {
+    if ((target_firmware ==  firmwares.GrblEmbedded) || (target_firmware ==  firmwares.Grbl)) {
         document.getElementById('control_zm_position_row').style.display = 'table-row';
     }
     document.getElementById('z_velocity_display').style.display = 'inline';
@@ -118,10 +118,10 @@ function onPosIntervalChange() {
 
 function get_Position() {
     var command = "M114";
-    if ((target_firmware == "grbl") || (target_firmware == "grbl-embedded")) {
+    if ((target_firmware ==  firmwares.Grbl) || (target_firmware ==  firmwares.GrblEmbedded)) {
         command = "?";
         SendPrinterCommand(command, false, null, null, 114, 1);
-    } else if (target_firmware == "marlin-embedded") {
+    } else if (target_firmware ==  firmwares.MarlinEmbedded) {
         SendPrinterCommand(command, false, null, null, 114, 1);
     } else SendPrinterCommand(command, false, process_Position, null, 114, 1);
 }
@@ -140,7 +140,7 @@ function Control_get_position_value(label, result_data) {
 }
 
 function process_Position(response) {
-    if ((target_firmware == "grbl") || (target_firmware == "grbl-embedded")) {
+    if ((target_firmware ==  firmwares.Grbl) || (target_firmware ==  firmwares.GrblEmbedded)) {
         process_grbl_position(response);
     } else {
         document.getElementById('control_x_position').innerHTML = Control_get_position_value("X:", response);
@@ -156,7 +156,7 @@ function control_motorsOff() {
 
 function SendHomecommand(cmd) {
     if (document.getElementById('lock_UI').checked) return;
-    if ((target_firmware == "grbl-embedded") || (target_firmware == "grbl")) {
+    if ((target_firmware ==  firmwares.GrblEmbedded) || (target_firmware ==  firmwares.Grbl)) {
         switch (cmd) {
             case 'G28':
                 cmd = '$H';
@@ -202,13 +202,13 @@ function SendJogcommand(cmd, feedrate) {
         feedratevalue = parseInt(document.getElementById('control_z_velocity').value);
         if (feedratevalue < 1 || isNaN(feedratevalue) || (feedratevalue === null)) {
             var letter = "Z";
-            if ((target_firmware == "grbl-embedded") && (grblaxis > 3)) letter = "Axis";
+            if ((target_firmware ==  firmwares.GrblEmbedded) && (grblaxis > 3)) letter = "Axis";
             alertdlg(translate_text_item("Out of range"), translate_text_item( letter +" Feedrate value must be at least 1 mm/min!"));
             document.getElementById('control_z_velocity').value = preferenceslist[0].z_feedrate;
             return;
         }
     }
-    if ((target_firmware == "grbl-embedded") || (target_firmware == "grbl")) {
+    if ((target_firmware ==  firmwares.GrblEmbedded) || (target_firmware ==  firmwares.Grbl)) {
         if(grblaxis > 3){
             var letter = document.getElementById('control_select_axis').value;
             cmd = cmd.replace("Z", letter);

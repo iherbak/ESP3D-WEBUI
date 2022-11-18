@@ -338,8 +338,8 @@ function update_UI_firmware_target() {
   document.getElementById("control_z_position_label").innerHTML = "Z";
   document.getElementById("config_smoothie_nav").style.display = "none";
   showAxiscontrols();
-  if (target_firmware == "repetier") {
-    fwName = "Repetier";
+  if (target_firmware ==  firmwares.Repetier) {
+    fwName =  firmwares.Repetier;
     document.getElementById("configtablink").style.display = "block";
     document.getElementById("auto_check_control").style.display = "flex";
     document.getElementById("motor_off_control").style.display = "table-row";
@@ -353,7 +353,7 @@ function update_UI_firmware_target() {
     document.getElementById("control_xm_position_row").style.display = "none";
     document.getElementById("control_ym_position_row").style.display = "none";
     document.getElementById("control_zm_position_row").style.display = "none";
-  } else if (target_firmware == "repetier4davinci") {
+  } else if (target_firmware ==  firmwares.Repetier4DaVinci) {
     fwName = "Repetier for Davinci";
     document.getElementById("configtablink").style.display = "block";
     document.getElementById("auto_check_control").style.display = "flex";
@@ -368,8 +368,8 @@ function update_UI_firmware_target() {
     document.getElementById("control_xm_position_row").style.display = "none";
     document.getElementById("control_ym_position_row").style.display = "none";
     document.getElementById("control_zm_position_row").style.display = "none";
-  } else if (target_firmware == "smoothieware") {
-    fwName = "Smoothieware";
+  } else if (target_firmware ==  firmwares.Smoothieware) {
+    fwName =  firmwares.Smoothieware;
     document.getElementById("configtablink").style.display = "block";
     document.getElementById("config_smoothie_nav").style.display = "block";
     document.getElementById("auto_check_control").style.display = "flex";
@@ -384,7 +384,7 @@ function update_UI_firmware_target() {
     document.getElementById("control_xm_position_row").style.display = "none";
     document.getElementById("control_ym_position_row").style.display = "none";
     document.getElementById("control_zm_position_row").style.display = "none";
-  } else if (target_firmware == "grbl-embedded") {
+  } else if (target_firmware ==  firmwares.GrblEmbedded) {
     fwName = "GRBL ESP32";
     last_grbl_pos = "";
     document.getElementById("configtablink").style.display = "block";
@@ -450,7 +450,7 @@ function update_UI_firmware_target() {
     document.getElementById("settings_filters").style.display = "none";
     document.getElementById("control_x_position_label").innerHTML = "Xw";
     document.getElementById("control_y_position_label").innerHTML = "Yw";
-  } else if (target_firmware == "marlin-embedded") {
+  } else if (target_firmware ==  firmwares.MarlinEmbedded) {
     fwName = "Marlin ESP32";
     document.getElementById("configtablink").style.display = "block";
     document.getElementById("auto_check_control").style.display = "flex";
@@ -468,8 +468,8 @@ function update_UI_firmware_target() {
     document.getElementById("control_xm_position_row").style.display = "none";
     document.getElementById("control_ym_position_row").style.display = "none";
     document.getElementById("control_zm_position_row").style.display = "none";
-  } else if (target_firmware == "marlin") {
-    fwName = "Marlin";
+  } else if (target_firmware ==  firmwares.Marlin) {
+    fwName =  firmwares.Marlin;
     document.getElementById("configtablink").style.display = "block";
     document.getElementById("auto_check_control").style.display = "flex";
     document.getElementById("motor_off_control").style.display = "table-row";
@@ -483,7 +483,7 @@ function update_UI_firmware_target() {
     document.getElementById("control_xm_position_row").style.display = "none";
     document.getElementById("control_ym_position_row").style.display = "none";
     document.getElementById("control_zm_position_row").style.display = "none";
-  } else if (target_firmware == "marlinkimbra") {
+  } else if (target_firmware ==  firmwares.MarlinKimbra) {
     fwName = "Marlin Kimbra";
     document.getElementById("configtablink").style.display = "block";
     document.getElementById("auto_check_control").style.display = "flex";
@@ -498,8 +498,8 @@ function update_UI_firmware_target() {
     document.getElementById("control_xm_position_row").style.display = "none";
     document.getElementById("control_ym_position_row").style.display = "none";
     document.getElementById("control_zm_position_row").style.display = "none";
-  } else if (target_firmware == "grbl") {
-    fwName = "Grbl";
+  } else if (target_firmware ==  firmwares.Grbl) {
+    fwName =  firmwares.Grbl;
     document.getElementById("configtablink").style.display = "block";
     document.getElementById("tab_title_configuration").innerHTML =
       "<span translate>GRBL configuration</span>";
@@ -529,7 +529,7 @@ function update_UI_firmware_target() {
     fwName = "Unknown";
     document.getElementById("configtablink").style.display = "none";
   }
-  if (target_firmware == "grbl-embedded") {
+  if (target_firmware ==  firmwares.GrblEmbedded) {
     EP_HOSTNAME = "System/Hostname";
     EP_STA_SSID = "Sta/SSID";
     EP_STA_PASSWORD = "Sta/Password";
@@ -543,7 +543,7 @@ function update_UI_firmware_target() {
     EP_AP_IP_VALUE = "AP/IP";
     SETTINGS_AP_MODE = 2;
     SETTINGS_STA_MODE = 1;
-  } else if (target_firmware == "marlin-embedded") {
+  } else if (target_firmware ==  firmwares.MarlinEmbedded) {
     EP_HOSTNAME = "ESP_HOSTNAME";
     EP_STA_SSID = "STA_SSID";
     EP_STA_PASSWORD = "STA_PWD";
@@ -610,7 +610,7 @@ function initUI() {
     document.getElementById("FW_VERSION").innerHTML = fw_version;
   // Get the element with id="defaultOpen" and click on it
   document.getElementById("maintablink").click();
-  if (target_firmware == "grbl-embedded" || target_firmware == "grbl") {
+  if (target_firmware ==  firmwares.GrblEmbedded || target_firmware ==  firmwares.Grbl) {
     if (typeof document.getElementById("grblcontroltablink") !== "undefined") {
       document.getElementById("grblcontroltablink").click();
     }
@@ -707,7 +707,7 @@ var socket_response = "";
 var socket_is_settings = false;
 
 function process_socket_response(msg) {
-  if (target_firmware == "grbl-embedded" || target_firmware == "grbl") {
+  if (target_firmware ==  firmwares.GrblEmbedded || target_firmware == firmwares.Grbl) {
     if (msg.startsWith("<")) {
       grbl_process_status(msg);
     } else if (msg.startsWith("[PRB:")) {
@@ -738,7 +738,7 @@ function process_socket_response(msg) {
       }
     }
   } else {
-    if (target_firmware == "marlin-embedded") {
+    if (target_firmware ==  firmwares.MarlinEmbedded) {
       if (
         socket_is_settings &&
         !(

@@ -78,7 +78,7 @@ function control_changeaxis(){
 
 function init_grbl_panel() {
     grbl_set_probe_detected(false);
-    if (target_firmware == "grbl-embedded") {
+    if (target_firmware ==  firmwares.GrblEmbedded) {
         on_autocheck_status(true);
     }
 }
@@ -188,9 +188,9 @@ function onstatusIntervalChange() {
 //errorfn cannot be NULL
 function get_status() {
     var command = "?";
-    if ((target_firmware == "grbl") || (target_firmware == "grbl-embedded")) command = "?";
+    if ((target_firmware ==  firmwares.Grbl) || (target_firmware ==  firmwares.GrblEmbedded)) command = "?";
     //ID 114 is same as M114 as '?' cannot be an ID
-    if (target_firmware == "grbl")SendPrinterSilentCommand(command, null, null, 114, 1);
+    if (target_firmware ==  firmwares.Grbl)SendPrinterSilentCommand(command, null, null, 114, 1);
     else SendPrinterCommand(command, false, null, null, 114, 1);
 }
 

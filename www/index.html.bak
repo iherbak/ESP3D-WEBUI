@@ -6,11 +6,21 @@
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <title>ESP3D WebUI</title>
     <script>
-      var target_firmware = "";
+      var target_firmware =  firmwares.GrblEmbedded;
+    </script>
+    <script>
       var web_ui_version = "2.1.2b0";
+    </script>
+    <script>
       var direct_sd = false;
-      var fw_version = "1";
+    </script>
+    <script>
+      var fw_version = "";
+    </script>
+    <script>
       var primary_sd = "/ext/";
+    </script>
+    <script>
       var secondary_sd = "/sd/";
     </script>
     <!--removeIf(cleanheader)-->
@@ -87,7 +97,7 @@
     <script src="js/SPIFFSdlg.js"></script>
     <script src="js/statusdlg.js"></script>
     <script src="js/updatedlg.js"></script>
-    <script src="js/setup.js"></script>
+    <script src="js/setupdlg.js"></script>
     <script src="js/macrodlg.js"></script>
     <script src="js/preferencesdlg.js"></script>
     <script src="js/translate.js"></script>

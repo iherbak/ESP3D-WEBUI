@@ -5,7 +5,7 @@ function connectdlg(getFw) {
     if (modal == null) return;
     showModal();
     //removeIf(production)
-    connectsuccess("FW version:0.9.9X # FW target:Smoothieware # FW HW:Direct SD # primary : /sd/ # secondary : /ext/ # authentication: no");
+    connectsuccess("FW version:0.9.9X # FW target:grbl-embedded # FW HW:Direct SD # primary : /sd/ # secondary : /ext/ # authentication: no# webcommunication:socket:123#hostname:localhost");
     return;
     //endRemoveIf(production)
     if (typeof getFw != 'undefined') get_FW = getFw;
@@ -14,7 +14,7 @@ function connectdlg(getFw) {
 
 function getFWdata(response) {
     var tlist = response.split("#");
-    //FW version:0.9.200 # FW target:smoothieware # FW HW:Direct SD # primary sd:/ext/ # secondary sd:/sd/ # authentication: yes
+
     if (tlist.length < 3) {
         return false;
     }
@@ -43,7 +43,7 @@ function getFWdata(response) {
     if (sublist.length != 2) {
         return false;
     }
-    if (!direct_sd && (target_firmware == "smoothieware")) {
+    if (!direct_sd && (target_firmware ==  firmwares.Smoothieware)) {
         primary_sd = "sd/";
     } else {
         primary_sd = sublist[1].toLowerCase().trim();
@@ -53,7 +53,7 @@ function getFWdata(response) {
     if (sublist.length != 2) {
         return false;
     }
-    if (!direct_sd && (target_firmware == "smoothieware")) {
+    if (!direct_sd && (target_firmware ==  firmwares.Smoothieware)) {
         secondary_sd = "ext/";
     } else {
         secondary_sd = sublist[1].toLowerCase().trim();
@@ -72,11 +72,11 @@ function getFWdata(response) {
         else {
             async_webcommunication = false;
             websocket_port = sublist[2].trim();
-            if (sublist.length>3) {
+            if (sublist.length > 3) {
                 websocket_ip = sublist[3].trim();
             } else {
                 console.log("No IP for websocket, use default");
-                 websocket_ip =  document.location.hostname;
+                websocket_ip = document.location.hostname == '' ? 'localhost' : document.location.hostname;
             }
         }
     }
@@ -84,14 +84,14 @@ function getFWdata(response) {
         sublist = tlist[7].split(":");
         if (sublist[0].trim() == "hostname") esp_hostname = sublist[1].trim();
     }
-    
-    if ((target_firmware == "grbl-embedded") && (tlist.length > 8)) {
-         sublist = tlist[8].split(":");
-         if (sublist[0].trim() == "axis") {
-             grblaxis = parseInt(sublist[1].trim());
-            }
+
+    if ((target_firmware ==  firmwares.GrblEmbedded) && (tlist.length > 8)) {
+        sublist = tlist[8].split(":");
+        if (sublist[0].trim() == "axis") {
+            grblaxis = parseInt(sublist[1].trim());
+        }
     }
-    
+
     if (async_webcommunication) {
         if (!!window.EventSource) {
             event_source = new EventSource('/events');
