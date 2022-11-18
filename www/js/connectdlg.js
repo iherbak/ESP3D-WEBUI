@@ -43,21 +43,21 @@ function getFWdata(response) {
     if (sublist.length != 2) {
         return false;
     }
-    if (!direct_sd && (target_firmware ==  firmwares.Smoothieware)) {
-        primary_sd = "sd/";
-    } else {
-        primary_sd = sublist[1].toLowerCase().trim();
-    }
+    // if (!direct_sd && (target_firmware ==  firmwares.Smoothieware)) {
+    //     primary_sd = "sd/";
+    // } else {
+    primary_sd = sublist[1].toLowerCase().trim();
+    //    }
     //secondary sd
     sublist = tlist[4].split(":");
     if (sublist.length != 2) {
         return false;
     }
-    if (!direct_sd && (target_firmware ==  firmwares.Smoothieware)) {
-        secondary_sd = "ext/";
-    } else {
-        secondary_sd = sublist[1].toLowerCase().trim();
-    }
+    // if (!direct_sd && (target_firmware ==  firmwares.Smoothieware)) {
+    //     secondary_sd = "ext/";
+    // } else {
+    secondary_sd = sublist[1].toLowerCase().trim();
+    //    }
     //authentication
     sublist = tlist[5].split(":");
     if (sublist.length != 2) {
@@ -85,7 +85,8 @@ function getFWdata(response) {
         if (sublist[0].trim() == "hostname") esp_hostname = sublist[1].trim();
     }
 
-    if ((target_firmware ==  firmwares.GrblEmbedded) && (tlist.length > 8)) {
+    //if ((target_firmware ==  firmwares.GrblEmbedded) && (tlist.length > 8)) {
+    if (tlist.length > 8) {
         sublist = tlist[8].split(":");
         if (sublist[0].trim() == "axis") {
             grblaxis = parseInt(sublist[1].trim());

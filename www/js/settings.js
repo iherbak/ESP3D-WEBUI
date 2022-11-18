@@ -268,33 +268,33 @@ function get_index_from_eeprom_pos(pos) {
   return -1;
 }
 
-function build_HTML_setting_list(filter) {
-  //this to prevent concurent process to update after we clean content
-  if (do_not_build_settings) return;
-  var content = "";
-  current_setting_filter = filter;
-  document.getElementById(
-    current_setting_filter + "_setting_filter"
-  ).checked = true;
-  for (var i = 0; i < setting_configList.length; i++) {
-    if (
-      setting_configList[i].F.trim().toLowerCase() == filter ||
-      filter == "all"
-    ) {
-      content += "<tr>";
-      content += "<td style='vertical-align:middle'>";
-      content += translate_text_item(setting_configList[i].label, true);
-      content += "</td>";
-      content += "<td style='vertical-align:middle'>";
-      content +=
-        "<table><tr><td>" + build_control_from_index(i) + "</td></tr></table>";
-      content += "</td>";
-      content += "</tr>\n";
-    }
-  }
-  if (content.length > 0)
-    document.getElementById("settings_list_data").innerHTML = content;
-}
+// function build_HTML_setting_list(filter) {
+//   //this to prevent concurent process to update after we clean content
+//   if (do_not_build_settings) return;
+//   var content = "";
+//   current_setting_filter = filter;
+//   document.getElementById(
+//     current_setting_filter + "_setting_filter"
+//   ).checked = true;
+//   for (var i = 0; i < setting_configList.length; i++) {
+//     if (
+//       setting_configList[i].F.trim().toLowerCase() == filter ||
+//       filter == "all"
+//     ) {
+//       content += "<tr>";
+//       content += "<td style='vertical-align:middle'>";
+//       content += translate_text_item(setting_configList[i].label, true);
+//       content += "</td>";
+//       content += "<td style='vertical-align:middle'>";
+//       content +=
+//         "<table><tr><td>" + build_control_from_index(i) + "</td></tr></table>";
+//       content += "</td>";
+//       content += "</tr>\n";
+//     }
+//   }
+//   if (content.length > 0)
+//     document.getElementById("settings_list_data").innerHTML = content;
+// }
 
 function setting_check_value(value, index, subindex) {
   var valid = true;
@@ -363,7 +363,7 @@ function process_settings_answer(response_text) {
           vindex = create_setting_entry(response.EEPROM[i], vindex);
         }
         if (vindex > 0) {
-          if (setup_is_done) build_HTML_setting_list(current_setting_filter);
+          //if (setup_is_done) build_HTML_setting_list(current_setting_filter);
           update_UI_setting();
         } else result = false;
       } else result = false;
