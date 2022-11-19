@@ -426,7 +426,6 @@ function initUI_4() {
   init_files_panel(false);
   //check if we need setup
     //wizard is done UI can be updated
-    setup_is_done = true;
     do_not_build_settings = false;
     AddCmd(display_boot_progress);
     AddCmd(closeModal);

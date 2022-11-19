@@ -3,7 +3,6 @@ var setting_error_msg = "";
 var setting_lastindex = -1;
 var setting_lastsubindex = -1;
 var current_setting_filter = "network";
-var setup_is_done = false;
 var do_not_build_settings = false;
 
 function refreshSettings(hide_setting_list) {
