@@ -33,16 +33,6 @@
                     </div>
                 </div>
             </div>
-            <div id="DHT_pref_panel" class="panel panel-default">
-                <div class="panel-heading">
-                    <div class="checkbox">
-                        <label>
-                            <input type="checkbox" id="enable_DHT" />
-                            <span translate>Show DHT output</span>
-                        </label>
-                    </div>
-                </div>
-            </div>
             <div class="panel panel-default">
                 <div class="panel-heading">
                     <div class="checkbox">
@@ -219,7 +209,7 @@
                         </label>
                     </div>
                 </div>
-                <!-- <div id="temperatures_preferences" class="panel-body">
+                <div id="temperatures_preferences" class="panel-body">
                     <div id="preferences_tempInterval_check_group">
                         <table>
                             <tr>
@@ -246,8 +236,8 @@
                             <input type="checkbox" id="enable_redundant_controls" />
                             <span translate>Enable heater T0 redundant temperatures</span>
                         </label>
-                    </div> -->
-                    <!-- <div class="checkbox" id="probe_controls_option" class="hide_it">
+                    </div>
+                    <div class="checkbox" id="probe_controls_option" class="hide_it">
                         <label>
                             <input type="checkbox" id="enable_probe_controls" />
                             <span translate>Enable probe temperatures</span>
@@ -264,8 +254,8 @@
                             <input type="checkbox" id="enable_chamber_controls" />
                             <span translate>Enable chamber controls</span>
                         </label>
-                    </div> -->
-                </div> -->
+                    </div>
+                </div>
             </div>
             <div id="ext_pref_panel" class="panel panel-default">
                 <div class="panel-heading">
@@ -299,30 +289,6 @@
                         </table>
                     </div>
                     <br>
-                    <div id="preferences_e_velocity_group">
-                        <table>
-                            <tr>
-                                <td>
-                                    <span><span translate>E feedrate</span>:&nbsp;</span>
-                                </td>
-                                <td>
-                                    <div class="input-group has-control">
-                                        <input class="form-control w6" type="number" min="1" max="9999" id="preferences_e_velocity" onchange="Checkvalues('preferences_e_velocity')" />
-                                        <span id="preferences_e_velocity_icon" class="form-control-feedback ico_feedback"></span>
-                                    </div>
-                                </td>
-                                <td>
-                                    <div class="input-group">
-                                        <input class="hide_it"></input>
-                                        <span class="input-group-addon form_control" translate>mm/min</span>
-                                    </div>
-                                </td>
-                            </tr>
-                        </table>
-                    </div>
-
-                    <br>
-
                     <div id="preferences_control_nb_extruders_group">
                         <table>
                             <tr>
@@ -336,12 +302,6 @@
                                 </td>
                             </tr>
                         </table>
-                    </div>
-                    <div class="checkbox">
-                        <label>
-                            <input type="checkbox" id="enable_mixed_E_controls" onclick="build_extruder_list()" />
-                            <span translate>Mixed extruders</span>
-                        </label>
                     </div>
                     <div class="checkbox">
                         <label>

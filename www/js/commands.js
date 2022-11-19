@@ -39,9 +39,6 @@ function Monitor_output_Update(message) {
     }
     var regex = /ok T:/g;
 
-    // if (target_firmware ==  firmwares.Repetier || target_firmware ==  firmwares.Repetier4DaVinci) {
-    //     regex = /T:/g;
-    // }
     var output = "";
     var Monitor_outputLength = Monitor_output.length;
     var isverbosefilter = document.getElementById("monitor_enable_verbose_mode").checked;
@@ -49,13 +46,7 @@ function Monitor_output_Update(message) {
         //Filter the output  
         if ((Monitor_output[i].trim().toLowerCase().startsWith("ok")) && !isverbosefilter) continue;
         if ((Monitor_output[i].trim().toLowerCase() == "wait") && !isverbosefilter) continue;
-        //if ((target_firmware ==  firmwares.Grbl) || (target_firmware ==  firmwares.GrblEmbedded)) {
-            //no status
             if ((Monitor_output[i].startsWith("<") || Monitor_output[i].startsWith("[echo:")) && !isverbosefilter) continue;
-        // } else {
-        //     //no temperatures
-        //     if (!isverbosefilter && Monitor_output[i].match(regex)) continue;
-        // }
         if ((Monitor_output[i].trim() === "\n") || (Monitor_output[i].trim() === "\r") || (Monitor_output[i].trim() === "\r\n") || (Monitor_output[i].trim() === "")) continue;
         m = Monitor_output[i];
         if (Monitor_output[i].startsWith("[#]")) {

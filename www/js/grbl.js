@@ -12,75 +12,10 @@ var WCOc = 0;
 var grblaxis = 3;
 var grblzerocmd = 'X0 Y0 Z0';
 var axis_Z_feedrate = 0;
-var axis_A_feedrate = 0;
-var axis_B_feedrate = 0;
-var axis_C_feedrate = 0;
-var last_axis_letter = "Z";
-
-function build_axis_selection(){
-    var html = "<select class='form-control wauto' id='control_select_axis' onchange='control_changeaxis()' >";
-    for (var i = 3; i <= grblaxis; i++) {
-        var letter;
-        if (i == 3) letter = "Z";
-        else if (i == 4) letter = "A";
-        else if (i == 5) letter = "B";
-        else if (i == 6) letter = "C";
-        html += "<option value='" + letter + "'";
-        if (i == 3) html += " selected ";
-        html += ">";
-        html += letter;
-        html += "</option>\n";
-    }
-    html += "</select>\n";
-   if(grblaxis > 3) {
-       document.getElementById('axis_selection').innerHTML = html;
-       document.getElementById('axis_label').innerHTML = translate_text_item("Axis") + ":";
-       document.getElementById('axis_selection').style.display = "table-row"
-   }
-}
-
-function control_changeaxis(){
-    var letter = document.getElementById('control_select_axis').value;
-    document.getElementById('axisup').innerHTML = '+'+letter;
-    document.getElementById('axisdown').innerHTML = '-'+letter;
-    document.getElementById('homeZlabel').innerHTML = ' '+letter+' ';
-    switch(last_axis_letter) {
-        case "Z":
-            axis_Z_feedrate = document.getElementById('control_z_velocity').value;
-        break;
-        case "A":
-            axis_A_feedrate = document.getElementById('control_z_velocity').value;
-        break;
-        case "B":
-            axis_B_feedrate = document.getElementById('control_z_velocity').value;
-        break;
-        case "C":
-            axis_C_feedrate = document.getElementById('control_z_velocity').value;
-        break;
-    }
-    
-    last_axis_letter = letter;
-     switch(last_axis_letter) {
-        case "Z":
-            document.getElementById('control_z_velocity').value = axis_Z_feedrate;
-        break;
-        case "A":
-            document.getElementById('control_z_velocity').value = axis_A_feedrate;
-        break;
-        case "B":
-            document.getElementById('control_z_velocity').value = axis_B_feedrate;
-        break;
-        case "C":
-            document.getElementById('control_z_velocity').value = axis_C_feedrate;
-        break;
-    }
-}
 
 function init_grbl_panel() {
     grbl_set_probe_detected(false);
-//    if (target_firmware ==  firmwares.GrblEmbedded) {
-        on_autocheck_status(true);
-  //  }
+    on_autocheck_status(true);
 }
 
 function grbl_clear_status() {
@@ -148,12 +83,12 @@ function on_autocheck_status(use_value) {
         document.getElementById('autocheck_status').checked = true;
         return;
     }
-    if (typeof(use_value) !== 'undefined') document.getElementById('autocheck_status').checked = use_value;
+    if (typeof (use_value) !== 'undefined') document.getElementById('autocheck_status').checked = use_value;
     if (document.getElementById('autocheck_status').checked) {
         var interval = parseInt(document.getElementById('statusInterval_check').value);
         if (!isNaN(interval) && interval > 0 && interval < 100) {
             if (interval_status != -1) clearInterval(interval_status);
-            interval_status = setInterval(function() {
+            interval_status = setInterval(function () {
                 get_status()
             }, interval * 1000);
         } else {
@@ -188,11 +123,8 @@ function onstatusIntervalChange() {
 //errorfn cannot be NULL
 function get_status() {
     var command = "?";
-    //if ((target_firmware ==  firmwares.Grbl) || (target_firmware ==  firmwares.GrblEmbedded)) 
     command = "?";
     //ID 114 is same as M114 as '?' cannot be an ID
-    //if (target_firmware ==  firmwares.Grbl) SendPrinterSilentCommand(command, null, null, 114, 1);
-    //else 
     SendPrinterCommand(command, false, null, null, 114, 1);
 }
 
@@ -213,17 +145,17 @@ function process_grbl_position(response) {
         } else {
             WCOz = 0;
         }
-         if ((tab3.length > 3) && (grblaxis > 3)) {
+        if ((tab3.length > 3) && (grblaxis > 3)) {
             WCOa = parseFloat(tab3[3]);
         } else {
             WCOa = 0;
         }
-         if ((tab3.length > 4) && (grblaxis > 4)){
+        if ((tab3.length > 4) && (grblaxis > 4)) {
             WCOb = parseFloat(tab3[4]);
         } else {
             WCOb = 0;
         }
-         if ((tab3.length > 5) && (grblaxis > 5)) {
+        if ((tab3.length > 5) && (grblaxis > 5)) {
             WCOc = parseFloat(tab3[5]);
         } else {
             WCOc = 0;
@@ -310,7 +242,7 @@ function process_grbl_status(response) {
             if (probe_progress_status != 0) {
                 probe_failed_notification();
             }
-            if (surface_progress_status != 0) {                
+            if (surface_progress_status != 0) {
                 surface_failed_notification();
             }
             //grbl_error_msg = "";
@@ -328,7 +260,7 @@ function process_grbl_status(response) {
         }
         if (tab2.toLowerCase().startsWith("idle")) {
 
-            if(surface_progress_status == 100) {
+            if (surface_progress_status == 100) {
                 finalize_surfacing();
             }
             grbl_error_msg = "";
@@ -345,7 +277,7 @@ function finalize_probing() {
     document.getElementById("probingtext").style.display = "none";
     document.getElementById('sd_pause_btn').style.display = "none";
     document.getElementById('sd_resume_btn').style.display = "none";
-    document.getElementById('sd_reset_btn').style.display = "none";    
+    document.getElementById('sd_reset_btn').style.display = "none";
 }
 
 function finalize_surfacing() {
@@ -372,7 +304,7 @@ function process_grbl_SD(response) {
             progress = progress.replace(">", "");
         }
         document.getElementById('grbl_SD_status').innerHTML = sdname + "&nbsp;<progress id='print_prg' value=" + progress + " max='100'></progress>" + progress + "%";
-        if(progress == 100 & surface_progress_status != 0) {
+        if (progress == 100 & surface_progress_status != 0) {
             surface_progress_status = progress;
         }
     } else { //no SD printing
@@ -479,7 +411,7 @@ function StartProbeProcess() {
 
 function StartSurfaceProcess() {
     var path = "/";
-    var dirname = "SurfaceWizard";    
+    var dirname = "SurfaceWizard";
 
     var bitdiam = document.getElementById('surfacebitdiam').value;;
     var stepover = document.getElementById('surfacestepover').value;;
@@ -493,17 +425,17 @@ function StartSurfaceProcess() {
 
     filename = "Surface" + "_X" + surfacewidth + "_Y" + surfacelength + "_Z-" + Zdepth + ".nc";
 
-    var blob = new Blob([ncProg], {type: "txt"});
+    var blob = new Blob([ncProg], { type: "txt" });
 
     file = new File([blob], filename);
-    
+
     grbl_wiz_step1_dir(path, dirname, file);
 }
 
 function grbl_wiz_step1_dir(path, dirname, file) {
     var url = "/upload?path=" + encodeURIComponent(path) + "&action=createdir&filename=" + encodeURIComponent(dirname);
     //console.log("path " + path + " dirname " + dirname + " filename " + file.name)
-    SendGetHttp(url, function() { grbl_wiz_step2_upload(file, path + dirname + "/") }, function() { grbl_wiz_error_dir(path, dirname) });
+    SendGetHttp(url, function () { grbl_wiz_step2_upload(file, path + dirname + "/") }, function () { grbl_wiz_error_dir(path, dirname) });
 }
 
 function grbl_wiz_step2_upload(file, path) {
@@ -522,7 +454,7 @@ function grbl_wiz_step2_upload(file, path) {
     formData.append('path', path);
     formData.append('myfile[]', file, path + file.name);
     formData.append('path', path);
-    SendFileHttp(url, formData, FilesUploadProgressDisplay, function() { grbl_wiz_step3_launch(path + filename) }, function() { grbl_wiz_error_upload(file, path)});
+    SendFileHttp(url, formData, FilesUploadProgressDisplay, function () { grbl_wiz_step3_launch(path + filename) }, function () { grbl_wiz_error_upload(file, path) });
 }
 
 function grbl_wiz_step3_launch(filename) {
@@ -549,10 +481,10 @@ function grbl_wiz_error_upload(file, path) {
 function CreateSurfaceProgram(bitdiam, stepover, feedrate, surfacewidth, surfacelength, Zdepth, spindle) {
     var crlf = "\r\n";
 
-    effectiveCuttingWidth = Math.round(1000 * (bitdiam * (1 - stepover/100))) / 1000;
+    effectiveCuttingWidth = Math.round(1000 * (bitdiam * (1 - stepover / 100))) / 1000;
     nPasses = Math.floor(surfacelength / effectiveCuttingWidth);
     lastPassWidth = surfacelength % effectiveCuttingWidth;
-    
+
     ncProg = "G21" + crlf; // Unit = mm
     ncProg += "G90" + crlf; // Absolute Positioning
     ncProg += "G53 G0 Z-5" + crlf; // Move spindle to safe height
@@ -569,12 +501,12 @@ function CreateSurfaceProgram(bitdiam, stepover, feedrate, surfacewidth, surface
         cmd = "G1 X" + Xend + " Y" + i * effectiveCuttingWidth + " Z-" + Zdepth;
         ncProg += cmd + crlf;
         if (i < nPasses) {
-            cmd = "G1 Y" + (i+1) * effectiveCuttingWidth; // increment Y at each pass
+            cmd = "G1 Y" + (i + 1) * effectiveCuttingWidth; // increment Y at each pass
             ncProg += cmd + crlf;
         }
     }
 
-    if(lastPassWidth > 0) {
+    if (lastPassWidth > 0) {
         Xend == 0 ? Xend = surfacewidth : Xend = 0;    // alternate X
         cmd = "G1 Y" + surfacelength;
         ncProg += cmd + crlf;

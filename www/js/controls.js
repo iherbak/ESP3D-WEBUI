@@ -20,9 +20,7 @@ function showAxiscontrols() {
     document.getElementById('JogBar').style.display = 'block';
     document.getElementById('HomeZ').style.display = 'block';
     document.getElementById('control_z_position_display').style.display = 'block';
-    //if ((target_firmware ==  firmwares.GrblEmbedded) || (target_firmware ==  firmwares.Grbl)) {
-        document.getElementById('control_zm_position_row').style.display = 'table-row';
-    //}
+    document.getElementById('control_zm_position_row').style.display = 'table-row';
     document.getElementById('z_velocity_display').style.display = 'inline';
 
 }
@@ -49,7 +47,7 @@ function Macro_build_list(response_text) {
     }
     for (var i = 0; i < 9; i++) {
         var entry;
-        if ((response.length != 0) && (typeof(response[i].name) !== 'undefined' && typeof(response[i].glyph) !== 'undefined' && typeof(response[i].filename) !== 'undefined' && typeof(response[i].target) !== 'undefined' && typeof(response[i].class) !== 'undefined' && typeof(response[i].index) !== 'undefined')) {
+        if ((response.length != 0) && (typeof (response[i].name) !== 'undefined' && typeof (response[i].glyph) !== 'undefined' && typeof (response[i].filename) !== 'undefined' && typeof (response[i].target) !== 'undefined' && typeof (response[i].class) !== 'undefined' && typeof (response[i].index) !== 'undefined')) {
             entry = {
                 name: response[i].name,
                 glyph: response[i].glyph,
@@ -83,47 +81,42 @@ function processMacroGetFailed(errorcode, response) {
     Macro_build_list("");
 }
 
-// function on_autocheck_position(use_value) {
-//     if (typeof(use_value) !== 'undefined') document.getElementById('autocheck_position').checked = use_value;
-//     if (document.getElementById('autocheck_position').checked) {
-//         var interval = parseInt(document.getElementById('posInterval_check').value);
-//         if (!isNaN(interval) && interval > 0 && interval < 100) {
-//             if (interval_position != -1) clearInterval(interval_position);
-//             interval_position = setInterval(function() {
-//                 get_Position()
-//             }, interval * 1000);
-//         } else {
-//             document.getElementById('autocheck_position').checked = false;
-//             document.getElementById('posInterval_check').value = 0;
-//             if (interval_position != -1) clearInterval(interval_position);
-//             interval_position = -1;
-//         }
-//     } else {
-//         if (interval_position != -1) clearInterval(interval_position);
-//         interval_position = -1;
-//     }
-// }
+function on_autocheck_position(use_value) {
+    if (typeof (use_value) !== 'undefined') document.getElementById('autocheck_position').checked = use_value;
+    if (document.getElementById('autocheck_position').checked) {
+        var interval = parseInt(document.getElementById('posInterval_check').value);
+        if (!isNaN(interval) && interval > 0 && interval < 100) {
+            if (interval_position != -1) clearInterval(interval_position);
+            interval_position = setInterval(function () {
+                get_Position()
+            }, interval * 1000);
+        } else {
+            document.getElementById('autocheck_position').checked = false;
+            document.getElementById('posInterval_check').value = 0;
+            if (interval_position != -1) clearInterval(interval_position);
+            interval_position = -1;
+        }
+    } else {
+        if (interval_position != -1) clearInterval(interval_position);
+        interval_position = -1;
+    }
+}
 
-// function onPosIntervalChange() {
-//     var interval = parseInt(document.getElementById('posInterval_check').value);
-//     if (!isNaN(interval) && interval > 0 && interval < 100) {
-//         //on_autocheck_position();
-//     } else {
-//         document.getElementById('autocheck_position').checked = false;
-//         document.getElementById('posInterval_check').value = 0;
-//         if (interval != 0) alertdlg(translate_text_item("Out of range"), translate_text_item("Value of auto-check must be between 0s and 99s !!"));
-//         //on_autocheck_position();
-//     }
-// }
+function onPosIntervalChange() {
+    var interval = parseInt(document.getElementById('posInterval_check').value);
+    if (!isNaN(interval) && interval > 0 && interval < 100) {
+        //on_autocheck_position();
+    } else {
+        document.getElementById('autocheck_position').checked = false;
+        document.getElementById('posInterval_check').value = 0;
+        if (interval != 0) alertdlg(translate_text_item("Out of range"), translate_text_item("Value of auto-check must be between 0s and 99s !!"));
+        //on_autocheck_position();
+    }
+}
 
 function get_Position() {
-    var command = "M114";
-    //if ((target_firmware ==  firmwares.Grbl) || (target_firmware ==  firmwares.GrblEmbedded)) {
-        command = "?";
-        SendPrinterCommand(command, false, null, null, 114, 1);
-    // } else if (target_firmware ==  firmwares.MarlinEmbedded) {
-    //     SendPrinterCommand(command, false, null, null, 114, 1);
-    // } else SendPrinterCommand(command, false, process_Position, null, 114, 1);
+    var command = "?";
+    SendPrinterCommand(command, false, null, null, 114, 1);
 }
 
 function Control_get_position_value(label, result_data) {
@@ -140,45 +133,30 @@ function Control_get_position_value(label, result_data) {
 }
 
 function process_Position(response) {
-    //if ((target_firmware ==  firmwares.Grbl) || (target_firmware ==  firmwares.GrblEmbedded)) {
-        process_grbl_position(response);
-    // } else {
-    //     document.getElementById('control_x_position').innerHTML = Control_get_position_value("X:", response);
-    //     document.getElementById('control_y_position').innerHTML = Control_get_position_value("Y:", response);
-    //     document.getElementById('control_z_position').innerHTML = Control_get_position_value("Z:", response);
-    // }
+    process_grbl_position(response);
 }
 
-// function control_motorsOff() {
-//     var command = "M84";
-//     SendPrinterCommand(command, true);
-// }
 
 function SendHomecommand(cmd) {
     if (document.getElementById('lock_UI').checked) return;
-    //if ((target_firmware ==  firmwares.GrblEmbedded) || (target_firmware ==  firmwares.Grbl)) {
-        switch (cmd) {
-            case 'G28':
-                cmd = '$H';
-                break;
-            case 'G28 X0':
-                cmd = '$HX';
-                break;
-            case 'G28 Y0':
-                cmd = '$HY';
-                break;
+    switch (cmd) {
+        case 'G28':
+            cmd = '$H';
+            break;
+        case 'G28 X0':
+            cmd = '$HX';
+            break;
+        case 'G28 Y0':
+            cmd = '$HY';
+            break;
+        case 'G28 Z0':
+            cmd = '$HZ';
+            break;
+        default:
+            cmd = '$H';
+            break;
+    }
 
-            case 'G28 Z0':
-                if (grblaxis > 3) {
-                    cmd = '$H' + document.getElementById('control_select_axis').value;
-                } else cmd = '$HZ';
-                break;
-            default:
-                cmd = '$H';
-                break;
-        }
-
-    //}
     SendPrinterCommand(cmd, true, get_Position);
 }
 
@@ -202,21 +180,17 @@ function SendJogcommand(cmd, feedrate) {
         feedratevalue = parseInt(document.getElementById('control_z_velocity').value);
         if (feedratevalue < 1 || isNaN(feedratevalue) || (feedratevalue === null)) {
             var letter = "Z";
-            //if ((target_firmware ==  firmwares.GrblEmbedded) && (grblaxis > 3)) letter = "Axis";
-            if(grbl_help >3) letter = "Axis";
-            alertdlg(translate_text_item("Out of range"), translate_text_item( letter +" Feedrate value must be at least 1 mm/min!"));
+            alertdlg(translate_text_item("Out of range"), translate_text_item(letter + " Feedrate value must be at least 1 mm/min!"));
             document.getElementById('control_z_velocity').value = preferenceslist[0].z_feedrate;
             return;
         }
     }
-    //if ((target_firmware ==  firmwares.GrblEmbedded) || (target_firmware ==  firmwares.Grbl)) {
-        if(grblaxis > 3){
-            var letter = document.getElementById('control_select_axis').value;
-            cmd = cmd.replace("Z", letter);
-        }
-        command = "$J=G91 G21 F" + feedratevalue + " " + cmd;
-        console.log(command);
-    //} else command = "G91\nG1 " + cmd + " F" + feedratevalue + "\nG90";
+    if (grblaxis > 3) {
+        var letter = document.getElementById('control_select_axis').value;
+        cmd = cmd.replace("Z", letter);
+    }
+    command = "$J=G91 G21 F" + feedratevalue + " " + cmd;
+    console.log(command);
     SendPrinterCommand(command, true, get_Position);
 }
 

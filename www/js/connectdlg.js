@@ -5,7 +5,7 @@ function connectdlg(getFw) {
     if (modal == null) return;
     showModal();
     //removeIf(production)
-    connectsuccess("FW version:0.9.9X # FW target:grbl-embedded # FW HW:Direct SD # primary : /sd/ # secondary : /ext/ # authentication: no# webcommunication:socket:123#hostname:localhost");
+    connectsuccess("FW version:0.9.9X # FW target:grbl-embedded # FW HW:Direct SD # primary : /sd/ # secondary : /ext/ # authentication: no# webcommunication:socket:123#hostname:localhost#axis:3");
     return;
     //endRemoveIf(production)
     if (typeof getFw != 'undefined') get_FW = getFw;
@@ -43,21 +43,12 @@ function getFWdata(response) {
     if (sublist.length != 2) {
         return false;
     }
-    // if (!direct_sd && (target_firmware ==  firmwares.Smoothieware)) {
-    //     primary_sd = "sd/";
-    // } else {
     primary_sd = sublist[1].toLowerCase().trim();
-    //    }
-    //secondary sd
     sublist = tlist[4].split(":");
     if (sublist.length != 2) {
         return false;
     }
-    // if (!direct_sd && (target_firmware ==  firmwares.Smoothieware)) {
-    //     secondary_sd = "ext/";
-    // } else {
     secondary_sd = sublist[1].toLowerCase().trim();
-    //    }
     //authentication
     sublist = tlist[5].split(":");
     if (sublist.length != 2) {
@@ -85,7 +76,6 @@ function getFWdata(response) {
         if (sublist[0].trim() == "hostname") esp_hostname = sublist[1].trim();
     }
 
-    //if ((target_firmware ==  firmwares.GrblEmbedded) && (tlist.length > 8)) {
     if (tlist.length > 8) {
         sublist = tlist[8].split(":");
         if (sublist[0].trim() == "axis") {
@@ -98,7 +88,6 @@ function getFWdata(response) {
             event_source = new EventSource('/events');
             event_source.addEventListener('InitID', Init_events, false);
             event_source.addEventListener('ActiveID', ActiveID_events, false);
-            event_source.addEventListener('DHT', DHT_events, false);
         }
     }
     startSocket();

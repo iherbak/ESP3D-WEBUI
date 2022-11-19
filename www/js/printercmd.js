@@ -43,10 +43,7 @@ function SendPrinterSilentCommandSuccess(response) {
 
 
 function SendPrinterCommandSuccess(response) {
-    //if ((target_firmware ==  firmwares.Grbl) || (target_firmware ==  firmwares.GrblEmbedded)) 
     return;
-    // if (response[response.length - 1] != '\n') Monitor_output_Update(response + "\n");
-    // else Monitor_output_Update(response);
 }
 
 function SendPrinterCommandFailed(error_code, response) {

@@ -6,7 +6,7 @@
                     <b><span translate>Controls</span></b>
                 </div>
                 <div class="pull-right">
-                    <!-- <div id="auto_check_control" class="panel-flex-row">
+                    <div id="auto_check_control" class="panel-flex-row">
                         <table class="checkbox">
                             <tr>
                                 <td>&nbsp;&nbsp;</td>
@@ -26,8 +26,9 @@
                                 </td>
                             </tr>
                         </table>
-                    </div> -->
+                    </div>
                 </div>
+
             </div>
         </div>
     </div>
@@ -189,32 +190,6 @@
                 </tr>
                 </table>
             </div>
-            <div class="position_text hide_it" id="control_c_position_display">
-                <table>
-                    <tr>
-                        <td>
-                            <button class="btn btn-xs btn-default" id="zero_c_btn" onclick="SendZerocommand('C0')">&Oslash;</button>
-                        </td>
-                        <td>
-                            <span class="label label-default" style="padding: 5px 5px 3px 5px;"><span id="control_c_position_label">Cw</span>:<span id="control_c_position">&nbsp;</span></span>
-                        </td>
-                    </tr>
-                    <tr id="control_zm_position_row">
-                        <td></td>
-                        <td>
-                            <table>
-                                <tr style="height: 5px;">
-                                </tr>
-                                <tr>
-                                    <td>
-                                        <span class="label label-default" style="padding: 5px 5px 3px 5px;"><span id="control_cm_position_label">Cm</span>:<span id="control_cm_position">&nbsp;</span></span>
-                        </td>
-                    </tr>
-                </table>
-                </td>
-                </tr>
-                </table>
-            </div>
         </div>
     </div>
     <div class="panel-footer">
@@ -241,8 +216,6 @@
                         <span class="input-group-addon form_control" id="axis_label">Z:</span>
                         <input class="hide_it"></input>
                     </td>
-                    <td class="hide_it" id="axis_selection">
-                    </td>
                     <td>
                         <span class="input-group-addon hide_it"></span>
                         <input class="form-control w5" type="number" min="1" id="control_z_velocity" onchange="onZvelocityChange()" />
@@ -250,9 +223,6 @@
                     </td>
                 </tr>
             </table>
-
-            <!-- &nbsp;
-            <button id='motor_off_control' class="btn btn-primary" onclick="control_motorsOff()" translate>Motors off</button> -->
         </div>
     </div>
 </div>
